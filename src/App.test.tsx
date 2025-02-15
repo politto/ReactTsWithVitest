@@ -1,23 +1,21 @@
-import Form from './Form';
+
 import { fireEvent, render, screen, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import App from './App';
 
 describe('load', () => {
+    // mock the setCounterHistory function
     beforeEach(() => {
         cleanup();
     })
-    // mock the setCounterHistory function
-    const setCounterHistory = vi.fn();
 
-    it('should render the form', () => {
-                          // vv mock non-fn attrubute
-        render(<Form counterHistory={[]} setCounterHistory={setCounterHistory} />);
-        
+    it('should load app', () => {
+        render(<App />);
         const countdisplay = screen.getByText('count is 0');
         const countMod3Display = screen.getByText('count mod3 is 0');
         const input1 = screen.getByLabelText('input1');
         const input2 = screen.getByLabelText('input2');
-        const operand = screen.getAllByRole('combobox');
+        const operand = screen.getByRole('combobox');
         const calculateButton = screen.getByText('count is 0');
 
 
@@ -28,11 +26,12 @@ describe('load', () => {
         expect(countdisplay).toBeDefined();
         expect(countMod3Display).toBeDefined();
 
+
+
     });
 
-    it('should calculate the result based on the operand', () => {
-        render(<Form counterHistory={[1, 2, 3]} setCounterHistory={setCounterHistory} />);
-        
+    it("should work to delete history", () => {
+        render(<App />);
         const input1 = screen.getByLabelText('input1');
         const input2 = screen.getByLabelText('input2');
         const operand = screen.getByRole('combobox', {name: 'operand'});
@@ -53,20 +52,31 @@ describe('load', () => {
         
         fireEvent.change(operand, {target: {value: '+'}});
 
-        calculateButton.click();
+        fireEvent.click(calculateButton);
+        
 
         fireEvent.change(operand, {target: {value: '/'}});
-        calculateButton.click();
+        fireEvent.click(calculateButton);
 
         fireEvent.change(operand, {target: {value: '*'}});
-        calculateButton.click();
+        fireEvent.click(calculateButton);
 
         fireEvent.change(operand, {target: {value: '+sdf'}});
 
         mod3Button.click();
+        const deleteButton = screen.getAllByRole('button', {name: 'delete'});
 
+        deleteButton.forEach(element => {
+            fireEvent.click(element);
+        });;
+        console.log(deleteButton);
         
+        const restoreButton = screen.getAllByRole('button', {name: 'restore'});
 
+        restoreButton.forEach(element => {
+            fireEvent.click(element);
+        });;
 
+        // deleteButton.click();
     });
 })

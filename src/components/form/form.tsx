@@ -62,6 +62,8 @@ export default function Form({counterHistory, setCounterHistory}: Props) {
         }
         }}
        defaultValue={inputValue}
+       aria-label="input1"
+       name="input1"
         ></input>
         <select onChange = {(e) => {
           const newOperand = e.target.value;
@@ -69,6 +71,8 @@ export default function Form({counterHistory, setCounterHistory}: Props) {
           handleClick(inputValue, inputValue2, newOperand);
         }}
         defaultValue={operand}
+        //define for testing
+        aria-label="operand"
         >
           <option value = "+">+</option>
           <option value = "-">-</option>
@@ -82,6 +86,9 @@ export default function Form({counterHistory, setCounterHistory}: Props) {
         
         }}
         defaultValue = {inputValue2}
+        //define for testing
+        aria-label="input2"
+        name="input2"
         ></input>
       <button onClick={() => handleClick(inputValue, inputValue2, operand)}>
       count is {count}

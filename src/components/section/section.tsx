@@ -18,7 +18,7 @@ export default function Section({counterHistory, handleRemoveHistory}: Props) {
             return (
             <div>
                 <span key = {counter}> {counter} </span>
-                <button onClick={() => handleRemoveHistory(index)}>delete</button>
+                <button id = "btn" onClick={() => handleRemoveHistory(index)}>delete</button>
             </div>
             )
         })
